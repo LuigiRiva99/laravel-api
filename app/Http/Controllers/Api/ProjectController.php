@@ -11,7 +11,10 @@ class ProjectController extends Controller
     public function index() {
 
         //recupero i dati dal model Project
-        $projects = Project::all();
+        // $projects = Project::all();
+
+        //recupero i dati dal model Project con il type e le technologies
+        $projects = Project::with('type', 'technologies')->get();
 
         return response()->json([
             'projects' => $projects
