@@ -24,6 +24,7 @@ class UpdateProjectRequest extends FormRequest
         return [
 
             'title' => 'required|max:150|string',
+            'slug' => ['required', 'max:255', Rule::unique('posts')->ignore($this->post)],
             'description' => 'nullable|string',
             'type_id' => 'nullable|exists:types,id'
 

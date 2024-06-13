@@ -47,6 +47,22 @@ class ProjectController extends Controller
         
         $data = $request->all();
 
+        $base_slug = Str::slug($data['title']);
+        $slug = $base_slug;
+        $n = 0;
+
+        do {
+            // SELECT * FROM `posts` WHERE `slug` = ?
+            $find = Project::where('slug', $slug)->first(); // null | Post
+
+            if ($find !== null) {
+                $n++;
+                $slug = $base_slug . '-' . $n;
+            }
+        } while ($find !== null);
+
+        $data['slug'] = $slug;
+
         $new_project = Project::create($data);
 
         // controllo se c`è il parametro technologies
